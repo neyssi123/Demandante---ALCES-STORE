@@ -1,0 +1,169 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    background-color: #222222;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.topo {
+    background-color: #151515;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 50px;
+    border-bottom: 3px solid #b8794a;
+}
+
+
+.logo h1 {
+    color: #d99a6c;
+    font-size: 30px;
+}
+
+
+.pesquisa {
+    display: flex;
+    gap: 10px;
+}
+
+
+.pesquisa input {
+    padding: 10px;
+    width: 250px;
+    background-color: #333333;
+    border: 1px solid #b8794a;
+    color: white;
+}
+
+
+.pesquisa button {
+    padding: 10px 15px;
+    background-color: #b8794a;
+    border: none;
+    color: white;
+}
+
+
+.destaque {
+    background-color: #111111;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    padding: 30px 7%;
+    border-bottom: 2px solid #b8794a;
+}
+
+
+.destaque img {
+    margin-left: 150px;
+    height: 300px
+}
+
+
+.texto-destaque {
+    text-align: center;
+
+    flex: 1;
+}
+
+
+.texto-destaque h2 {
+    color: #d99a6c;
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+
+.texto-destaque p {
+    color: #dddddd;
+    font-size: 20px;
+    margin-bottom: 25px;
+}
+
+
+.texto-destaque button {
+    background-color: #b8794a;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    cursor: pointer;
+}
+
+.produtos {
+    padding: 30px 7%;
+}
+
+
+.produtos > h2 {
+    text-align: center;
+    color: #d99a6c;
+    margin-bottom: 25px;
+}
+
+
+.lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+
+.card {
+    background-color: #333333;
+    flex: 1 1 220px;
+    padding-bottom: 15px;
+    border: 1px solid #555555;
+}
+
+
+.card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+
+.card h3 {
+    color: #d99a6c;
+    margin: 10px 15px;
+}
+
+
+.card p {
+    color: #dddddd;
+    margin: 10px 15px;
+}
+
+
+.card strong {
+    color: #7fc97f;
+    margin-left: 15px;
+    font-size: 18px;
+}
+
+footer {
+    background-color: #151515;
+    display: flex;
+    gap: 20px;
+    padding: 20px 7%;
+    margin-top: 20px;
+    border-top: 2px solid #b8794a;
+}
+
+
+footer p {
+    margin-right: auto;
+    color: #bbbbbb;
+}
+
+
+footer a {
+    color: #d99a6c;
+    text-decoration: none;
+}
