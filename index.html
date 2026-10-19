@@ -1,11 +1,10 @@
+
 <!doctype html>
 <html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <title>Alce Store</title>
-
     <link rel="stylesheet" href="design.css" />
   </head>
 
@@ -18,6 +17,7 @@
       <div class="pesquisa">
         <input type="text" placeholder="Pesquisar" />
         <button>Buscar</button>
+        <button id="botao-admin">Admin</button>
       </div>
     </header>
 
@@ -27,25 +27,58 @@
 
         <div class="texto-destaque">
           <h2>ALCE STORE</h2>
-
           <p>Precisão e Arte em Aço Damasco.</p>
-
           <button>VER COLEÇÃO</button>
         </div>
       </section>
 
       <section class="produtos">
         <h2>TODAS AS FACAS</h2>
-
         <div class="lista" id="lista-facas"></div>
       </section>
     </main>
 
+    <div id="painel-admin" style="display: none; padding: 20px;">
+      <h2>Cadastrar faca</h2>
+
+      <form id="form-faca">
+        <input
+          type="text"
+          id="nome"
+          placeholder="Nome da faca"
+          required
+        />
+
+        <input
+          type="text"
+          id="descricao"
+          placeholder="Descrição"
+          required
+        />
+
+        <input
+          type="number"
+          id="preco"
+          placeholder="Preço"
+          step="0.01"
+          min="0"
+          required
+        />
+
+        <input
+          type="file"
+          id="imagem"
+          accept="image/*"
+          required
+        />
+
+        <button type="submit">Cadastrar</button>
+      </form>
+    </div>
+
     <footer>
       <p>Copyright © 2026 Alce Store</p>
-
       <a href="#">Política de Privacidade</a>
-
       <a href="#">Contato</a>
     </footer>
 

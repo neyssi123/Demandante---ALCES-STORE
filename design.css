@@ -167,3 +167,30 @@ footer a {
     color: #d99a6c;
     text-decoration: none;
 }
+
+
+#painel-admin {
+    background-color: #333333;
+    color: white;
+}
+
+#painel-admin h2 {
+    color: #d99a6c;
+    margin-bottom: 15px;
+}
+
+#form-faca {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 400px;
+}
+
+#form-faca input {
+    padding: 10px;
+}
+
+#form-faca button {
+    background-color: #b8794a;
+    padding: 12px;
+}
