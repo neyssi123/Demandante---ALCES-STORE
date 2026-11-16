@@ -1,0 +1,188 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #181818;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.topo {
+    background-color: #101010;
+    padding: 22px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #b8794a;
+}
+
+.topo h1 {
+    color: #d99a6c;
+    letter-spacing: 3px;
+}
+
+button {
+    padding: 12px 18px;
+    background-color: #b8794a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #d99a6c;
+}
+
+.detalhes {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 70px;
+    padding: 70px 8%;
+    min-height: 480px;
+}
+
+.imagem-produto {
+    width: 45%;
+    background-color: #252525;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.imagem-produto img {
+    width: 100%;
+    height: 380px;
+    object-fit: contain;
+}
+
+.informacoes {
+    flex: 1;
+}
+
+.informacoes h2 {
+    color: #d99a6c;
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.informacoes p {
+    color: #cccccc;
+    line-height: 1.7;
+    margin-bottom: 25px;
+}
+
+.informacoes h3 {
+    color: #d99a6c;
+    font-size: 30px;
+    margin-bottom: 25px;
+}
+
+#estado-estoque {
+    display: inline-block;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.em-estoque {
+    background-color: #183d28;
+    color: #79d99b;
+}
+
+.sem-estoque {
+    background-color: #492020;
+    color: #ff8888;
+}
+
+/* PAINEL ADMIN */
+
+#painel-admin {
+    background-color: #222222;
+    padding: 35px 7%;
+    border-top: 2px solid #b8794a;
+}
+
+#painel-admin h2 {
+    color: #d99a6c;
+    margin-bottom: 20px;
+}
+
+#form-editar {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 450px;
+}
+
+#form-editar input:not([type="checkbox"]),
+#form-editar textarea {
+    padding: 13px;
+    background-color: #333;
+    color: white;
+    border: 1px solid #555;
+    border-radius: 5px;
+}
+
+#form-editar textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+.opcao-estoque {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.opcao-estoque input {
+    width: 18px;
+    height: 18px;
+    accent-color: #b8794a;
+}
+
+footer {
+    background-color: #101010;
+    text-align: center;
+    padding: 25px;
+    color: #999;
+    border-top: 1px solid #60432f;
+}
+
+@media (max-width: 700px) {
+    .topo {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .detalhes {
+        flex-direction: column;
+        padding: 35px 20px;
+        gap: 30px;
+    }
+
+    .imagem-produto {
+        width: 100%;
+    }
+
+    .imagem-produto img {
+        height: 260px;
+    }
+
+    .informacoes {
+        width: 100%;
+    }
+
+    .informacoes h2 {
+        font-size: 28px;
+    }
+
+    #painel-admin {
+        padding: 25px 20px;
+    }
+}

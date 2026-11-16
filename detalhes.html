@@ -1,0 +1,78 @@
+
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Produto - Alce Store</title>
+    <link rel="stylesheet" href="detalhes.css">
+</head>
+
+<body>
+
+    <header class="topo">
+        <h1>ALCE STORE</h1>
+        <div>
+            <button onclick="window.location.href='index.html'">
+                Voltar à loja
+            </button>
+            <button id="botao-admin">Admin</button>
+        </div>
+    </header>
+
+    <main>
+        <section class="detalhes">
+
+            <div class="imagem-produto">
+                <img id="imagem-produto" src="" alt="Faca">
+            </div>
+
+            <div class="informacoes">
+                <h2 id="nome-produto"></h2>
+
+                <p id="descricao-produto"></p>
+
+                <h3 id="preco-produto"></h3>
+
+                <div id="estado-estoque"></div>
+            </div>
+
+        </section>
+
+        <section id="painel-admin" style="display: none;">
+
+            <h2>Editar produto</h2>
+
+            <form id="form-editar">
+
+                <input type="text" id="nome" placeholder="Nome" required>
+
+                <textarea id="descricao" placeholder="Descrição" required></textarea>
+
+                <input type="number" id="preco" placeholder="Preço"
+                    min="0" step="0.01" required>
+
+                <label>Alterar imagem:</label>
+                <input type="file" id="imagem" accept="image/*">
+
+                <label class="opcao-estoque">
+                    <input type="checkbox" id="estoque">
+                    Produto disponível em estoque
+                </label>
+
+                <button type="submit">Salvar alterações</button>
+
+            </form>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Copyright © 2026 Alce Store</p>
+    </footer>
+
+    <script src="detalhes.js"></script>
+
+</body>
+</html>

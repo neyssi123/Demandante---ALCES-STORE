@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="pt-br">
   <head>
@@ -15,64 +14,76 @@
       </div>
 
       <div class="pesquisa">
-        <input type="text" placeholder="Pesquisar" />
-        <button>Buscar</button>
-        <button id="botao-admin">Admin</button>
-      </div>
+    <input type="text" id="busca-topo" placeholder="Pesquisar facas..." />
+    <button id="botao-buscar">Buscar</button>
+    <button id="botao-admin">Admin</button>
+</div>
     </header>
 
     <main>
-      <section class="destaque">
-        <img src="imagenes/faca 1.jpeg" alt="Faca de aço damasco" />
+      
+<section class="destaque">
+    <div class="texto-destaque">
+        <h2>ALCE STORE</h2>
+        <p>Precisão e Arte em Aço Damasco.</p>
+        <button onclick="document.querySelector('.produtos').scrollIntoView({behavior: 'smooth'})">
+            VER COLEÇÃO
+        </button>
+    </div>
+</section>
 
-        <div class="texto-destaque">
-          <h2>ALCE STORE</h2>
-          <p>Precisão e Arte em Aço Damasco.</p>
-          <button>VER COLEÇÃO</button>
-        </div>
-      </section>
 
-      <section class="produtos">
-        <h2>TODAS AS FACAS</h2>
-        <div class="lista" id="lista-facas"></div>
-      </section>
+      
+<section class="produtos">
+    <h2>TODAS AS FACAS</h2>
+
+    <div class="filtros">
+        <input
+    type="text"
+    id="busca"
+    placeholder="Pesquisar por nome ou descrição..."
+/>
+
+        <select id="filtro-preco">
+            <option value="todos">Todos os preços</option>
+            <option value="baixo">Até R$ 50</option>
+            <option value="medio">R$ 50 a R$ 100</option>
+            <option value="alto">Acima de R$ 100</option>
+        </select>
+
+        <select id="filtro">
+            <option value="padrao">Ordem padrão</option>
+            <option value="maior">Maior preço</option>
+            <option value="menor">Menor preço</option>
+            <option value="az">Nome: A até Z</option>
+            <option value="za">Nome: Z até A</option>
+        </select>
+
+        <select id="filtro-favoritos">
+            <option value="todos">Todos os produtos</option>
+            <option value="favoritos">Somente favoritos ♥</option>
+        </select>
+    </div>
+
+    <div class="lista" id="lista-facas"></div>
+</section>
+
     </main>
 
-    <div id="painel-admin" style="display: none; padding: 20px;">
-      <h2>Cadastrar faca</h2>
+    <div id="painel-admin" style="display: none;">
+      <h2 id="titulo-formulario">Cadastrar faca</h2>
 
       <form id="form-faca">
-        <input
-          type="text"
-          id="nome"
-          placeholder="Nome da faca"
-          required
-        />
+        <input type="text" id="nome" placeholder="Nome da faca" required />
 
-        <input
-          type="text"
-          id="descricao"
-          placeholder="Descrição"
-          required
-        />
+        <input type="text" id="descricao" placeholder="Descrição" required />
 
-        <input
-          type="number"
-          id="preco"
-          placeholder="Preço"
-          step="0.01"
-          min="0"
-          required
-        />
+        <input type="number" id="preco" placeholder="Preço" min="0" step="0.01" required />
 
-        <input
-          type="file"
-          id="imagem"
-          accept="image/*"
-          required
-        />
+        <input type="file" id="imagem" accept="image/*" />
 
-        <button type="submit">Cadastrar</button>
+        <button type="submit" id="botao-salvar">Cadastrar</button>
+        <button type="button" id="botao-cancelar" style="display: none;">Cancelar edição</button>
       </form>
     </div>
 
