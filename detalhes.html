@@ -1,78 +1,42 @@
-
-<!doctype html>
-<html lang="pt-br">
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalhes do Produto - Alce Store</title>
+    <title>Detalhes | Alce Store</title>
     <link rel="stylesheet" href="detalhes.css">
 </head>
-
 <body>
 
-    <header class="topo">
+    <header>
         <h1>ALCE STORE</h1>
-        <div>
-            <button onclick="window.location.href='index.html'">
-                Voltar à loja
-            </button>
-            <button id="botao-admin">Admin</button>
-        </div>
+        <a href="index.html">Voltar à coleção</a>
     </header>
 
-    <main>
-        <section class="detalhes">
-
-            <div class="imagem-produto">
-                <img id="imagem-produto" src="" alt="Faca">
+    <main class="detalhes-container">
+        <section class="galeria">
+            <div class="imagem-principal">
+                <img id="imagem-principal" src="" alt="Imagem do produto">
             </div>
 
-            <div class="informacoes">
-                <h2 id="nome-produto"></h2>
+            <div class="miniaturas" id="miniaturas"></div>
+        </section>
 
-                <p id="descricao-produto"></p>
+        <section class="informacoes">
+            <h2 id="nome"></h2>
+            <p id="descricao"></p>
+            <h3 id="preco"></h3>
+            <p id="estoque"></p>
 
-                <h3 id="preco-produto"></h3>
-
-                <div id="estado-estoque"></div>
+            <div id="area-admin" style="display: none;">
+                <h3>Adicionar imagens</h3>
+                <input type="file" id="novas-imagens" accept="image/*" multiple>
+                <button id="botao-adicionar">Adicionar imagens</button>
+                <p id="mensagem-admin"></p>
             </div>
-
         </section>
-
-        <section id="painel-admin" style="display: none;">
-
-            <h2>Editar produto</h2>
-
-            <form id="form-editar">
-
-                <input type="text" id="nome" placeholder="Nome" required>
-
-                <textarea id="descricao" placeholder="Descrição" required></textarea>
-
-                <input type="number" id="preco" placeholder="Preço"
-                    min="0" step="0.01" required>
-
-                <label>Alterar imagem:</label>
-                <input type="file" id="imagem" accept="image/*">
-
-                <label class="opcao-estoque">
-                    <input type="checkbox" id="estoque">
-                    Produto disponível em estoque
-                </label>
-
-                <button type="submit">Salvar alterações</button>
-
-            </form>
-
-        </section>
-
     </main>
 
-    <footer>
-        <p>Copyright © 2026 Alce Store</p>
-    </footer>
-
     <script src="detalhes.js"></script>
-
 </body>
 </html>

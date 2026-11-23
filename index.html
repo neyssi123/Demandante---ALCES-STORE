@@ -14,8 +14,9 @@
       </div>
 
       <div class="pesquisa">
-    <input type="text" id="busca-topo" placeholder="Pesquisar facas..." />
-    <button id="botao-buscar">Buscar</button>
+      <a href="https://wa.me/5493754544282" target="_blank" class="botao-whatsapp">
+        WhatsApp
+      </a>
     <button id="botao-admin">Admin</button>
 </div>
     </header>
@@ -79,6 +80,11 @@
         <input type="text" id="descricao" placeholder="Descrição" required />
 
         <input type="number" id="preco" placeholder="Preço" min="0" step="0.01" required />
+           
+        <select id="estoque">
+             <option value="true">Em estoque</option>
+          <option value="false">Sem estoque</option>
+        </select>
 
         <input type="file" id="imagem" accept="image/*" />
 

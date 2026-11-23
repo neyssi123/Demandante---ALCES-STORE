@@ -1,127 +1,118 @@
-
-let facas = JSON.parse(localStorage.getItem("facas")) || [];
-
 let parametros = new URLSearchParams(window.location.search);
 let id = parametros.get("id");
 
+let facas = JSON.parse(localStorage.getItem("facas")) || [];
 let faca = facas.find(function(item) {
     return String(item.id) === id;
 });
 
-let adminAtivo = sessionStorage.getItem("adminAtivo") === "true";
+let imagemSelecionada = 0;
 
-const painel = document.querySelector("#painel-admin");
-const formulario = document.querySelector("#form-editar");
+const imagemPrincipal = document.querySelector("#imagem-principal");
+const miniaturas = document.querySelector("#miniaturas");
 
-function mostrarDetalhes() {
-    if (!faca) {
-        document.querySelector("main").innerHTML =
-            "<h2>Produto não encontrado.</h2>";
-        return;
+if (!faca) {
+    document.querySelector(".detalhes-container").innerHTML =
+        "<h2>Produto não encontrado.</h2>";
+} else {
+    if (!Array.isArray(faca.imagens)) {
+        faca.imagens = faca.imagem ? [faca.imagem] : [];
     }
 
-    document.querySelector("#imagem-produto").src = faca.imagem;
-    document.querySelector("#nome-produto").textContent = faca.nome;
-    document.querySelector("#descricao-produto").textContent = faca.descricao;
-    document.querySelector("#preco-produto").textContent = faca.preco;
+    document.querySelector("#nome").textContent = faca.nome;
+    document.querySelector("#descricao").textContent = faca.descricao;
+    document.querySelector("#preco").textContent = faca.preco;
 
-    let estado = document.querySelector("#estado-estoque");
+    atualizarEstoque();
+    mostrarImagens();
+
+    if (sessionStorage.getItem("adminAtivo") === "true") {
+        document.querySelector("#area-admin").style.display = "block";
+    }
+}
+
+function atualizarEstoque() {
+    let estoque = document.querySelector("#estoque");
 
     if (faca.estoque) {
-        estado.textContent = "✓ Em estoque";
-        estado.className = "em-estoque";
+        estoque.textContent = "✓ Em estoque";
+        estoque.className = "em-estoque";
     } else {
-        estado.textContent = "✕ Sem estoque";
-        estado.className = "sem-estoque";
+        estoque.textContent = "✕ Sem estoque";
+        estoque.className = "sem-estoque";
     }
 }
 
-function mostrarFormulario() {
-    if (!adminAtivo || !faca) {
-        painel.style.display = "none";
+function mostrarImagens() {
+    miniaturas.innerHTML = "";
+
+    if (faca.imagens.length === 0) {
+        imagemPrincipal.src = "";
         return;
     }
 
-    painel.style.display = "block";
+    if (imagemSelecionada >= faca.imagens.length) {
+        imagemSelecionada = 0;
+    }
 
-    document.querySelector("#nome").value = faca.nome;
-    document.querySelector("#descricao").value = faca.descricao;
+    imagemPrincipal.src = faca.imagens[imagemSelecionada];
 
-    document.querySelector("#preco").value =
-        faca.preco.replace("R$ ", "").replace(",", ".");
+    faca.imagens.forEach(function(imagem, indice) {
+        let miniatura = document.createElement("img");
 
-    document.querySelector("#estoque").checked = faca.estoque;
+        miniatura.src = imagem;
+        miniatura.alt = faca.nome;
+        
+        if (indice === imagemSelecionada) {
+            miniatura.classList.add("selecionada");
+        }
+
+        miniatura.addEventListener("click", function() {
+            imagemSelecionada = indice;
+            mostrarImagens();
+        });
+
+        miniaturas.appendChild(miniatura);
+    });
 }
 
-document.querySelector("#botao-admin").addEventListener("click", function() {
-    if (adminAtivo) {
-        adminAtivo = false;
-        sessionStorage.removeItem("adminAtivo");
-
-        painel.style.display = "none";
-
-        this.textContent = "Admin";
+document.querySelector("#botao-adicionar").addEventListener("click", function() {
+    if (sessionStorage.getItem("adminAtivo") !== "true") {
         return;
     }
 
-    let usuario = prompt("Usuário:");
-    let senha = prompt("Senha:");
+    let arquivos = document.querySelector("#novas-imagens").files;
+    let mensagem = document.querySelector("#mensagem-admin");
 
-    if (usuario === "admin" && senha === "admin") {
-        adminAtivo = true;
-        sessionStorage.setItem("adminAtivo", "true");
-
-        mostrarFormulario();
-
-        this.textContent = "Sair do Admin";
-    } else {
-        alert("Usuário ou senha incorretos!");
-    }
-});
-
-formulario.addEventListener("submit", function(evento) {
-    evento.preventDefault();
-
-    if (!adminAtivo || !faca) {
+    if (arquivos.length === 0) {
+        mensagem.textContent = "Selecione pelo menos uma imagem.";
         return;
     }
 
-    let arquivo = document.querySelector("#imagem").files[0];
+    let leituras = Array.from(arquivos).map(function(arquivo) {
+        return new Promise(function(resolve, reject) {
+            let leitor = new FileReader();
 
-    function salvarProduto(imagem) {
-        faca.nome = document.querySelector("#nome").value;
-        faca.descricao = document.querySelector("#descricao").value;
+            leitor.onload = function() {
+                resolve(leitor.result);
+            };
 
-        faca.preco = "R$ " + Number(document.querySelector("#preco").value)
-            .toFixed(2).replace(".", ",");
+            leitor.onerror = reject;
+            leitor.readAsDataURL(arquivo);
+        });
+    });
 
-        faca.imagem = imagem;
-
-        faca.estoque = document.querySelector("#estoque").checked;
+    Promise.all(leituras).then(function(imagens) {
+        faca.imagens.push(...imagens);
 
         localStorage.setItem("facas", JSON.stringify(facas));
 
-        mostrarDetalhes();
+        imagemSelecionada = faca.imagens.length - imagens.length;
+        mostrarImagens();
 
-        alert("Produto atualizado com sucesso!");
-    }
-
-    if (arquivo) {
-        let leitor = new FileReader();
-
-        leitor.onload = function() {
-            salvarProduto(leitor.result);
-        };
-
-        leitor.readAsDataURL(arquivo);
-    } else {
-        salvarProduto(faca.imagem);
-    }
+        document.querySelector("#novas-imagens").value = "";
+        mensagem.textContent = "Imagens adicionadas com sucesso!";
+    }).catch(function() {
+        mensagem.textContent = "Erro ao carregar as imagens.";
+    });
 });
-
-mostrarDetalhes();
-mostrarFormulario();
-
-if (adminAtivo) {
-    document.querySelector("#botao-admin").textContent = "Sair do Admin";
-}

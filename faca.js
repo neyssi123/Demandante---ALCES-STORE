@@ -1,4 +1,3 @@
-
 let facas = JSON.parse(localStorage.getItem("facas")) || [
     {
         nome: "Faca Imperial Damasco",
@@ -35,6 +34,10 @@ facas.forEach(function(faca) {
 
     if (faca.estoque === undefined) {
         faca.estoque = true;
+    }
+
+    if (!Array.isArray(faca.imagens)) {
+        faca.imagens = faca.imagem ? [faca.imagem] : [];
     }
 });
 
@@ -82,11 +85,6 @@ function mostrarFacas() {
     let produtos = [...facas];
 
     let pesquisa = document.querySelector("#busca").value.toLowerCase();
-    let pesquisaTopo = document.querySelector("#busca-topo").value.toLowerCase();
-
-    if (pesquisaTopo !== "") {
-        pesquisa = pesquisaTopo;
-    }
 
     let filtro = document.querySelector("#filtro").value;
     let preco = document.querySelector("#filtro-preco").value;
@@ -130,31 +128,32 @@ function mostrarFacas() {
         let estaFavorito = favoritos.includes(faca.id);
 
         lista.innerHTML += `
-            <article class="card">
+            <article class="card" onclick="abrirDetalhes('${faca.id}')">
+
                 <button class="botao-favorito"
-                    onclick="alternarFavorito(${faca.id})">
+                    onclick="event.stopPropagation(); alternarFavorito(${faca.id})">
                     ${estaFavorito ? "♥" : "♡"}
                 </button>
 
                 <img src="${faca.imagem}" alt="${faca.nome}">
+
                 <h3>${faca.nome}</h3>
+
                 <p>${faca.descricao}</p>
+
                 <strong>${faca.preco}</strong>
 
                 <p class="${faca.estoque ? 'em-estoque' : 'sem-estoque'}">
                     ${faca.estoque ? '✓ Em estoque' : '✕ Sem estoque'}
                 </p>
 
-                <button onclick="abrirDetalhes('${faca.id}')">
-                    Ver detalhes
-                </button>
-
                 ${adminAtivo ? `
-                    <div class="botoes-admin">
+                    <div class="botoes-admin" onclick="event.stopPropagation()">
                         <button onclick="editarFaca(${indice})">Editar</button>
                         <button onclick="eliminarFaca(${indice})">Eliminar</button>
                     </div>
                 ` : ""}
+
             </article>
         `;
     });
@@ -164,26 +163,10 @@ function mostrarFacas() {
     }
 }
 
-document.querySelector("#busca").addEventListener("input", mostrarFacas);
-
-document.querySelector("#busca-topo").addEventListener("input", function() {
-    document.querySelector("#busca").value = this.value;
+document.querySelector("#busca").addEventListener("input", function() {
     mostrarFacas();
 });
 
-document.querySelector("#busca-topo").addEventListener("keydown", function(evento) {
-    if (evento.key === "Enter") {
-        document.querySelector("#busca").value = this.value;
-        mostrarFacas();
-    }
-});
-
-document.querySelector("#botao-buscar").addEventListener("click", function() {
-    document.querySelector("#busca").value =
-        document.querySelector("#busca-topo").value;
-
-    mostrarFacas();
-});
 
 document.querySelector("#filtro").addEventListener("change", mostrarFacas);
 document.querySelector("#filtro-preco").addEventListener("change", mostrarFacas);
@@ -225,6 +208,8 @@ function editarFaca(indice) {
 
     document.querySelector("#preco").value =
         facas[indice].preco.replace("R$ ", "").replace(",", ".");
+
+    document.querySelector("#estoque").value = String(facas[indice].estoque);
 
     document.querySelector("#titulo-formulario").textContent = "Editar faca";
     document.querySelector("#botao-salvar").textContent = "Salvar alterações";
@@ -277,6 +262,18 @@ formulario.addEventListener("submit", function(evento) {
     let arquivo = document.querySelector("#imagem").files[0];
 
     function guardarFaca(imagem) {
+        let imagens = [];
+
+        if (indiceEdicao === -1) {
+            imagens = [imagem];
+        } else {
+            imagens = facas[indiceEdicao].imagens || [facas[indiceEdicao].imagem];
+
+            if (arquivo) {
+                imagens[0] = imagem;
+            }
+        }
+
         let novaFaca = {
             id: indiceEdicao === -1 ? Date.now() + Math.random() : facas[indiceEdicao].id,
             nome: document.querySelector("#nome").value,
@@ -284,7 +281,8 @@ formulario.addEventListener("submit", function(evento) {
             preco: "R$ " + Number(document.querySelector("#preco").value)
                 .toFixed(2).replace(".", ","),
             imagem: imagem,
-            estoque: indiceEdicao === -1 ? true : facas[indiceEdicao].estoque
+            imagens: imagens,
+            estoque: document.querySelector("#estoque").value === "true"
         };
 
         if (indiceEdicao === -1) {
